@@ -1,5 +1,6 @@
 var message = document.getElementById("message");
 var send = document.getElementById("send");
+var messageList = document.getElementById("message-list");
 
 var roomName = 'webrtc-room';
 
@@ -57,10 +58,7 @@ socket.on('ready', function () {
 
         createDataChannel();
 
-        let offerOptions = {
-            offerToReceiveAudio: 1
-        }
-        rtcPeerConnection.createOffer(offerOptions)
+        rtcPeerConnection.createOffer()
             .then(desc => setLocalAndOffer(desc))
             .catch(e => console.log(e));
     }
@@ -123,6 +121,12 @@ function receiveChannelCallback(event) {
 
 function handleReceiveMessage(event){
     console.log(event.data);
+
+    var div = document.createElement("div");
+    div.setAttribute("style","border:0.5px solid grey; margin:1%; padding:1%");
+    var data = document.createTextNode("Sender : "+event.data);
+    div.appendChild(data);
+    messageList.appendChild(div);
 }
 
 function setLocalAndOffer(sessionDescription) {
@@ -150,4 +154,10 @@ socket.on('answer', function (event) {
 send.onclick = function(){
     var text = message.value;
     dataChannel.send(text);
+
+    var div = document.createElement("div");
+    div.setAttribute("style","border:0.5px solid grey; margin:1%; padding:1%");
+    var data = document.createTextNode("You : "+text);
+    div.appendChild(data);
+    messageList.appendChild(div);
 }
