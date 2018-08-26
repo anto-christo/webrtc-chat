@@ -8,15 +8,14 @@ var rtcPeerConnection;
 var dataChannel;
 var dataChannelOptions;
 
-var iceServers = {
+this.iceServers = {
     'iceServers': [{
-            'url': 'stun:stun.services.mozilla.com'
+            url: 'turn:159.65.158.36:3478',
+            username: 'frappe',
+            credential: 'frappe'
         },
-        {
-            'url': 'stun:stun.l.google.com:19302'
-        }
     ]
-}
+};
 
 var isCaller;
 
